@@ -1,6 +1,5 @@
 package com.pic.decorate;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.pic.DecoratorContext;
@@ -19,14 +18,14 @@ public class CutDecorator extends Decorator {
 	}
 
 	@Override
-	public void operate(DecoratorContext decoratorContext) {
-		decorator.operate(decoratorContext);
-		List<String> newPath = new ArrayList<String>();
-		List<String> paths = decoratorContext.getFilePaths();
-		double maxSize = decoratorContext.getSize();
-		for (String path : paths) {
-			List<String> newList = cutImg(path, maxSize);
-		}
+	public void operation(DecoratorContext decoratorContext) {
+		// decorator.operation(decoratorContext);
+		// List<String> newPath = new ArrayList<String>();
+		// List<String> paths = decoratorContext.getFilePaths();
+		// double maxSize = decoratorContext.getSize();
+		// for (String path : paths) {
+		// List<String> newList = cutImg(path, maxSize);
+		// }
 	}
 
 	public List<String> cutImg(String path, double maxSize) {

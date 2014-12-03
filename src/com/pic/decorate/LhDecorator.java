@@ -1,10 +1,15 @@
 package com.pic.decorate;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import com.pic.DecoratorContext;
+import com.pic.bo.ImageInfoBO;
 import com.pic.bo.TupleBO;
 import com.pic.utils.Im4javaImageUtil;
 import com.pic.utils.ImageUtils;
@@ -14,60 +19,63 @@ import com.pic.utils.ImageUtils;
  * 
  * @author Wuhao
  */
-public class LhDecorator extends Decorator {
+public class LHDecorator extends Decorator {
 
 	@Override
-	public void operate(DecoratorContext decoratorContext) {
-		decorator.operate(decoratorContext);
-		List<String> newPath = new ArrayList<String>();
-		List<String> paths = decoratorContext.getFilePaths();
+	public void operation(DecoratorContext decoratorContext) {
+		decorator.operation(decoratorContext);
+		String path = decoratorContext.getFilePaths();
 		try {
-			for (String path : paths) {
-				Map<String, Integer> map = ImageUtils.getResolution(path);
-				int w = map.get("width");
-				int h = map.get("height");
-				if (w > h) {
-					TupleBO<Integer, Integer> tupleBO = dealwithWH(w, h, decoratorContext.getHeightUpper(), decoratorContext.getHeightFloor());
-					w = tupleBO.getA();
-					h = tupleBO.getB();
-				} else {
-					TupleBO<Integer, Integer> tupleBO = dealwithWH(h, w, decoratorContext.getHeightUpper(), decoratorContext.getHeightFloor());
-					h = tupleBO.getA();
-					w = tupleBO.getB();
-				}
-				Im4javaImageUtil.cutImage(w, path, path);
-				newPath.add(path);
+			ImageInfoBO image = ImageUtils.getPicInfo(path);
+			int width = image.getWidth();
+			int height = image.getHeigth();
+			int background = 0;
+			if (width > height) {
+				TupleBO<Double, Double> tupleBO = dealwithHL(width, height, decoratorContext.getWidthUpper(), decoratorContext.getWidthFloor());
+				background = width = tupleBO.first.intValue();
+				height = tupleBO.second.intValue();
+			} else {
+				TupleBO<Double, Double> tupleBO = dealwithHL(height, width, decoratorContext.getWidthUpper(), decoratorContext.getWidthFloor());
+				background = height = tupleBO.first.intValue();
+				width = tupleBO.second.intValue();
 			}
+			Im4javaImageUtil.cutImage(width, path, path);
+			backgroundPic(path, background);
 		} catch (Exception e) {
 
 		}
 	}
 
-	protected TupleBO<Integer, Integer> dealwithWH(int a, int b, int desA, int desB) {
-		TupleBO<Integer, Integer> tupleBO = new TupleBO<Integer, Integer>();
-		if (a > desA && b > desA) {
-			b = desA * b / a;
-			a = desA;
-		} else if (a > desA && b < desA && desB < b) {
-			b = desA * b / a;
-			a = desA;
-		} else if (a > desA && b < desB) {
-			b = desA * b / a;
-			a = desA;
-		} else if (a < desA && a > desB && b > desB && b < desA) {
-			// TODO
-		} else if ((desB < a && a < desA && b < desB) || (a < desB && b < desB)) {
-			if ((desB / b) > (desA / a)) {
-				b = desA * b / a;
-				a = desA;
-			} else {
-				a = desB * a / b;
-				b = desB;
-			}
+	protected TupleBO<Double, Double> dealwithHL(double bigNum, double smallNum, double upper, double floor) {
+		// TODO
+		// 1.bigNum>upper smallNum>upper
+		// 2.bigNum>upper upper>smallNum>floor
+		// 3.bigNum>upper floor>smallNum
+		// 4.upper>bigNum>ssmallNum upper>smallNum>floor
+		// 5.upper>bigNum>smallNum floor>smallNum
+		// 6.floor>bigNum smallNum>bigNum
+		double bigValue = bigNum;
+		double smallValue = smallNum;
+
+		if (!(floor < bigNum && bigNum < upper && upper < smallNum && upper < floor)) {
+			smallValue = smallNum * upper / bigNum;
 		}
-		tupleBO.setA(a);
-		tupleBO.setB(b);
+
+		TupleBO<Double, Double> tupleBO = new TupleBO<Double, Double>(bigValue, smallValue);
 		return tupleBO;
 	}
 
+	private void backgroundPic(String filePath, int background) throws IOException {
+		File file = new File(filePath);
+		BufferedImage small = ImageIO.read(file);
+		BufferedImage image = new BufferedImage(background, background, BufferedImage.TYPE_INT_RGB);
+		Graphics graphics = image.getGraphics();
+		graphics.setColor(new Color(255, 255, 255));
+		graphics.fillRect(0, 0, background, background);
+		int x = (image.getWidth() - small.getWidth()) / 2;
+		int y = (image.getHeight() - small.getHeight()) / 2;
+		graphics.drawImage(small, x, y, small.getWidth(), small.getHeight(), null);
+		graphics.dispose();
+		ImageIO.write(image, ImageUtils.getSuffixName(filePath), file);
+	}
 }

@@ -10,5 +10,5 @@ public abstract class Decorator {
 		this.decorator = decorator;
 	}
 
-	public abstract void operate(DecoratorContext decoratorContext);
+	public abstract void operation(DecoratorContext decoratorContext);
 }

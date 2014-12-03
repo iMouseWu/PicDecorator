@@ -1,37 +1,26 @@
 package com.pic;
 
-import java.util.List;
-
 /*
- * 装饰器上下文，就是装饰的条件
+ * 装饰器上下文，就是装饰的条件.暂时只支持宽度上限和高度上限是一样的情况
  */
 public class DecoratorContext {
 
+	public final static Double DEFAULTUPPER = 300D;
+
+	public final static Double DEFAULTFLOOR = 800D;
 	/**
-	 * 期望宽度上限
+	 * 期望上限
 	 */
-	private Integer widthUpper;
+	private Double widthUpper;
 	/**
-	 * 期望宽度下限
+	 * 期望下限
 	 */
-	private Integer widthFloor;
+	private Double widthFloor;
 
 	/**
-	 * 期望高度上限
+	 * 期望高比宽或者宽高比的上限。初步认为这个值大于1
 	 */
-	private Integer heightUpper;
-	/**
-	 * 期望高度下限
-	 */
-	private Integer heightFloor;
-	/**
-	 * 期望宽比高
-	 */
-	private Double wbh;
-	/**
-	 * 期望高比宽
-	 */
-	private Double hbw;
+	private Double aspectContrast;
 	/**
 	 * 期望图片大小,以kb为单位
 	 */
@@ -40,62 +29,22 @@ public class DecoratorContext {
 	/**
 	 * 图片路径
 	 */
-	private List<String> filePaths;
+	private String filePaths;
 
-	public List<String> getFilePaths() {
+	public String getFilePaths() {
 		return filePaths;
 	}
 
-	public void setFilePaths(List<String> filePaths) {
+	public void setFilePaths(String filePaths) {
 		this.filePaths = filePaths;
 	}
 
-	public Integer getWidthUpper() {
-		return widthUpper;
+	public Double getAspectContrast() {
+		return aspectContrast;
 	}
 
-	public void setWidthUpper(Integer widthUpper) {
-		this.widthUpper = widthUpper;
-	}
-
-	public Integer getWidthFloor() {
-		return widthFloor;
-	}
-
-	public void setWidthFloor(Integer widthFloor) {
-		this.widthFloor = widthFloor;
-	}
-
-	public Integer getHeightUpper() {
-		return heightUpper;
-	}
-
-	public void setHeightUpper(Integer heightUpper) {
-		this.heightUpper = heightUpper;
-	}
-
-	public Integer getHeightFloor() {
-		return heightFloor;
-	}
-
-	public void setHeightFloor(Integer heightFloor) {
-		this.heightFloor = heightFloor;
-	}
-
-	public Double getWbh() {
-		return wbh;
-	}
-
-	public void setWbh(Double wbh) {
-		this.wbh = wbh;
-	}
-
-	public Double getHbw() {
-		return hbw;
-	}
-
-	public void setHbw(Double hbw) {
-		this.hbw = hbw;
+	public void setAspectContrast(Double aspectContrast) {
+		this.aspectContrast = aspectContrast;
 	}
 
 	public Double getSize() {
@@ -104,6 +53,28 @@ public class DecoratorContext {
 
 	public void setSize(Double size) {
 		this.size = size;
+	}
+
+	public Double getWidthUpper() {
+		if (null == widthUpper) {
+			return DEFAULTUPPER;
+		}
+		return widthUpper;
+	}
+
+	public void setWidthUpper(Double widthUpper) {
+		this.widthUpper = widthUpper;
+	}
+
+	public Double getWidthFloor() {
+		if (null == widthFloor) {
+			return DEFAULTFLOOR;
+		}
+		return widthFloor;
+	}
+
+	public void setWidthFloor(Double widthFloor) {
+		this.widthFloor = widthFloor;
 	}
 
 }
