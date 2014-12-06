@@ -1,63 +1,94 @@
 package com.pic.bo;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Iterator;
+
+import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+import javax.imageio.stream.ImageInputStream;
+
+import org.apache.log4j.Logger;
+
+import com.pic.exception.PicException;
+
+/**
+ * 图片信息类
+ * 
+ * @author wuhao
+ */
 public class ImageInfoBO {
+
+	private Logger log = Logger.getLogger(ImageInfoBO.class);
 
 	private int width;
 	private int heigth;
 	private long size;
 	// 根路径
-	String rootPath;
+	private String rootPath;
 	// 名称
-	String name;
+	private String name;
 	// 后缀
-	String suffix;
+	private String suffix;
+
+	public ImageInfoBO(String path) throws PicException{
+		File file = new File(path);
+		ImageInputStream imgeIS = null;
+		try {
+			imgeIS = ImageIO.createImageInputStream(new File(path));
+			Iterator<ImageReader> imageIter = ImageIO.getImageReaders(imgeIS);
+			if (imageIter.hasNext()) {
+				ImageReader reader = imageIter.next();
+				suffix = reader.getFormatName();
+			}
+			imageIter = ImageIO.getImageReadersByFormatName(suffix);
+			if (imageIter.hasNext()) {
+				ImageReader reader = imageIter.next();
+				reader.setInput(imgeIS, true);
+				width = reader.getWidth(reader.getMinIndex());
+				heigth = reader.getHeight(reader.getMinIndex());
+			}
+
+		} catch (IOException e) {
+			throw new PicException("create imageInfoBO error", e);
+		} finally {
+			if (null != imgeIS) {
+				try {
+					imgeIS.close();
+				} catch (IOException e) {
+					log.info("close ImageInputStream error", e);
+				}
+			}
+		}
+		int lastSeq = path.lastIndexOf(File.separator) + 1;
+		int lastdot = path.lastIndexOf(".");
+		rootPath = path.substring(0, lastSeq);
+		name = path.substring(lastSeq, lastdot);
+		size = file.length();
+	}
 
 	public int getWidth() {
 		return width;
-	}
-
-	public void setWidth(int width) {
-		this.width = width;
 	}
 
 	public int getHeigth() {
 		return heigth;
 	}
 
-	public void setHeigth(int heigth) {
-		this.heigth = heigth;
-	}
-
 	public long getSize() {
 		return size;
-	}
-
-	public void setSize(long size) {
-		this.size = size;
 	}
 
 	public String getRootPath() {
 		return rootPath;
 	}
 
-	public void setRootPath(String rootPath) {
-		this.rootPath = rootPath;
-	}
-
 	public String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public String getSuffix() {
 		return suffix;
-	}
-
-	public void setSuffix(String suffix) {
-		this.suffix = suffix;
 	}
 
 }

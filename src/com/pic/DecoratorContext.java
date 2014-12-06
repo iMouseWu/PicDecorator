@@ -5,17 +5,17 @@ package com.pic;
  */
 public class DecoratorContext {
 
-	public final static Double DEFAULTUPPER = 300D;
+	public final static Integer DEFAULTUPPER = 300;
 
-	public final static Double DEFAULTFLOOR = 800D;
+	public final static Integer DEFAULTFLOOR = 800;
 	/**
 	 * 期望上限
 	 */
-	private Double widthUpper;
+	private Integer widthUpper;
 	/**
 	 * 期望下限
 	 */
-	private Double widthFloor;
+	private Integer widthFloor;
 
 	/**
 	 * 期望高比宽或者宽高比的上限。初步认为这个值大于1
@@ -55,25 +55,25 @@ public class DecoratorContext {
 		this.size = size;
 	}
 
-	public Double getWidthUpper() {
+	public Integer getWidthUpper() {
 		if (null == widthUpper) {
 			return DEFAULTUPPER;
 		}
 		return widthUpper;
 	}
 
-	public void setWidthUpper(Double widthUpper) {
+	public void setWidthUpper(Integer widthUpper) {
 		this.widthUpper = widthUpper;
 	}
 
-	public Double getWidthFloor() {
+	public Integer getWidthFloor() {
 		if (null == widthFloor) {
 			return DEFAULTFLOOR;
 		}
 		return widthFloor;
 	}
 
-	public void setWidthFloor(Double widthFloor) {
+	public void setWidthFloor(Integer widthFloor) {
 		this.widthFloor = widthFloor;
 	}
 

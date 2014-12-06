@@ -18,11 +18,11 @@ public class CutDecorator extends Decorator {
 	}
 
 	@Override
-	public void operation(DecoratorContext decoratorContext) {
-		// decorator.operation(decoratorContext);
+	public void operation(DecoratorContext context) {
+		// decorator.operation(context);
 		// List<String> newPath = new ArrayList<String>();
-		// List<String> paths = decoratorContext.getFilePaths();
-		// double maxSize = decoratorContext.getSize();
+		// List<String> paths = context.getFilePaths();
+		// double maxSize = context.getSize();
 		// for (String path : paths) {
 		// List<String> newList = cutImg(path, maxSize);
 		// }
