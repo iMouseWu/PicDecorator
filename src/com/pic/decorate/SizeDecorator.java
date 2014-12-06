@@ -37,12 +37,10 @@ public class SizeDecorator extends Decorator {
 				if (width > context.getWidthFloor() && height > context.getWidthFloor()) {
 					if (width > height) {
 						height = context.getWidthFloor().intValue();
-						// width = (int) (width * context.getWidthFloor() / height);
 					} else {
 						width = context.getWidthFloor().intValue();
 					}
 				}
-
 				Im4javaImageUtil.scaleImage(width, height, path, path);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

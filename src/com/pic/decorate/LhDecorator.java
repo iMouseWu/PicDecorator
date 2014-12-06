@@ -59,12 +59,7 @@ public class LHDecorator extends Decorator {
 		// 4.upper>bigNum>ssmallNum upper>smallNum>floor
 		// 5.upper>bigNum>smallNum floor>smallNum
 		// 6.floor>bigNum smallNum>bigNum
-		int bigValue = bigNum;
-		int smallValue = smallNum;
-
-		smallValue = smallNum * upper / bigNum;
-		bigValue = upper;
-		TupleBO<Integer, Integer> tupleBO = new TupleBO<Integer, Integer>(bigValue, smallValue);
+		TupleBO<Integer, Integer> tupleBO = new TupleBO<Integer, Integer>(upper, smallNum * upper / bigNum);
 		return tupleBO;
 	}
 
