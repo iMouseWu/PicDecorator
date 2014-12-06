@@ -2,7 +2,7 @@ package com.pic.decorate;
 
 import com.pic.DecoratorContext;
 
-public abstract class Decorator {
+public class Decorator {
 
 	protected Decorator decorator;
 
@@ -10,5 +10,7 @@ public abstract class Decorator {
 		this.decorator = decorator;
 	}
 
-	public abstract void operation(DecoratorContext decoratorContext);
+	public void operation(DecoratorContext context) {
+		// TODO todo nothing
+	}
 }
