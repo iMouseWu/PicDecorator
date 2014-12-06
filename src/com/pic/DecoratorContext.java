@@ -1,5 +1,9 @@
 package com.pic;
 
+import java.io.File;
+
+import org.apache.commons.lang3.StringUtils;
+
 /*
  * 装饰器上下文，就是装饰的条件.暂时只支持宽度上限和高度上限是一样的情况
  */
@@ -30,6 +34,36 @@ public class DecoratorContext {
 	 * 图片路径
 	 */
 	private String filePaths;
+
+	private String desType;
+
+	public String getDesType() {
+		if (StringUtils.isNotBlank(filePaths) && StringUtils.isBlank(desType)) {
+			desType = filePaths.substring(filePaths.lastIndexOf(".") + 1);
+		}
+		return desType;
+	}
+
+	public String getRootPath() {
+		if (StringUtils.isNotBlank(filePaths)) {
+			int lastSeq = filePaths.lastIndexOf(File.separator) + 1;
+			return filePaths.substring(0, lastSeq);
+		}
+		return null;
+	}
+
+	public String getPicName() {
+		if (StringUtils.isNotBlank(filePaths)) {
+			int lastSeq = filePaths.lastIndexOf(File.separator) + 1;
+			int lastdot = filePaths.lastIndexOf(".");
+			return filePaths.substring(lastSeq, lastdot);
+		}
+		return null;
+	}
+
+	public void setDesType(String desType) {
+		this.desType = desType;
+	}
 
 	public String getFilePaths() {
 		return filePaths;
