@@ -8,7 +8,8 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.pic.exception.PicException;
 
@@ -19,7 +20,7 @@ import com.pic.exception.PicException;
  */
 public class ImageInfoBO {
 
-	private Logger log = Logger.getLogger(ImageInfoBO.class);
+	private Logger log = LoggerFactory.getLogger(ImageInfoBO.class);
 
 	private int width;
 	private int heigth;

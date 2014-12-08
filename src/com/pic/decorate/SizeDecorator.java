@@ -2,6 +2,9 @@ package com.pic.decorate;
 
 import java.io.File;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.pic.DecoratorContext;
 import com.pic.bo.ImageInfoBO;
 import com.pic.utils.Im4javaImageUtil;
@@ -13,6 +16,7 @@ import com.pic.utils.Im4javaImageUtil;
  */
 public class SizeDecorator extends Decorator {
 
+	private Logger log = LoggerFactory.getLogger(AspectDecorator.class);
 	double standSize;
 
 	@Override
@@ -26,6 +30,7 @@ public class SizeDecorator extends Decorator {
 			try {
 				Im4javaImageUtil.changeQuality(85, path, path);
 			} catch (Exception e) {
+				log.warn("SizeDecorator operation error", e);
 			}
 		}
 		fileSize = file.length() / 1024.0;
@@ -43,8 +48,7 @@ public class SizeDecorator extends Decorator {
 				}
 				Im4javaImageUtil.scaleImage(width, height, path, path);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.warn("SizeDecorator operation error", e);
 			}
 		}
 	}

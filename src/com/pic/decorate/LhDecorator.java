@@ -1,5 +1,8 @@
 package com.pic.decorate;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.pic.DecoratorContext;
 import com.pic.bo.ImageInfoBO;
 import com.pic.bo.TupleBO;
@@ -13,6 +16,7 @@ import com.pic.utils.ImageUtils;
  */
 public class LHDecorator extends Decorator {
 
+	private Logger log = LoggerFactory.getLogger(AspectDecorator.class);
 	private int upper;
 	private int floor;
 
@@ -48,7 +52,7 @@ public class LHDecorator extends Decorator {
 			}
 			ImageUtils.createImgWithBacg(path, path, background);
 		} catch (Exception e) {
-
+			log.warn("LHDecorator operation error", e);
 		}
 	}
 

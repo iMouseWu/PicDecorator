@@ -1,5 +1,8 @@
 package com.pic.decorate;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.pic.DecoratorContext;
 import com.pic.bo.ImageInfoBO;
 import com.pic.utils.ImageUtils;
@@ -10,6 +13,8 @@ import com.pic.utils.ImageUtils;
  * @author Wuhao
  */
 public class AspectDecorator extends Decorator {
+
+	private Logger log = LoggerFactory.getLogger(AspectDecorator.class);
 
 	@Override
 	public void operation(DecoratorContext context) {
@@ -25,7 +30,7 @@ public class AspectDecorator extends Decorator {
 			int background = width > height ? width : height;
 			ImageUtils.createImgWithBacg(path, path, background);
 		} catch (Exception e) {
-
+			log.warn("AspectDecorator operation error", e);
 		}
 	}
 
@@ -36,9 +41,4 @@ public class AspectDecorator extends Decorator {
 		return true;
 	}
 
-	public static void main(String[] args) throws Exception {
-		// ImageInfoBO imageInfo = new ImageInfoBO("D:\\3r.png");
-		// System.out.println(imageInfo.getSuffix());
-		ImageUtils.createImgWithBacg("D:\\333.gif", "D:\\3r.jpg", 800);
-	}
 }

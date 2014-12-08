@@ -17,11 +17,14 @@ import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.pic.decorate.AspectDecorator;
 
 public class FileUtils {
 
-	private static Logger log = Logger.getLogger(FileUtils.class);
+	private static Logger log = LoggerFactory.getLogger(AspectDecorator.class);
 
 	public static Properties loadPropertiesByCurrentThread(String path) throws FileNotFoundException, IOException {
 		InputStream in = null;

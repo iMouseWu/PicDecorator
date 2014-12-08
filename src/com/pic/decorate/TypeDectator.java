@@ -2,6 +2,9 @@ package com.pic.decorate;
 
 import java.io.File;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.pic.DecoratorContext;
 import com.pic.utils.FileUtils;
 import com.pic.utils.Im4javaImageUtil;
@@ -13,6 +16,8 @@ import com.pic.utils.Im4javaImageUtil;
  */
 public class TypeDectator extends Decorator {
 
+	private Logger log = LoggerFactory.getLogger(AspectDecorator.class);
+
 	@Override
 	public void operation(DecoratorContext context) {
 		decorator.operation(context);
@@ -20,8 +25,7 @@ public class TypeDectator extends Decorator {
 		try {
 			Im4javaImageUtil.changeImgeFormat(context.getFilePaths(), desPath);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.warn("SizeDecorator operation error", e);
 		}
 		FileUtils.deleteFile(context.getFilePaths());
 		context.setFilePaths(desPath);
