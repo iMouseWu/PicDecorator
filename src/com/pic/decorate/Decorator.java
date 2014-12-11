@@ -11,6 +11,6 @@ public class Decorator {
 	}
 
 	public void operation(DecoratorContext context) {
-		// TODO todo nothing
+		decorator.operation(context);
 	}
 }

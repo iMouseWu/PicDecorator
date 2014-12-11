@@ -35,6 +35,22 @@ public class DecoratorContext {
 	 */
 	private String filePaths;
 
+	/**
+	 * 线上商品的路径
+	 */
+	private String picOnlinePath;
+
+	public String getPicOnlinePath() {
+		return picOnlinePath;
+	}
+
+	public void setPicOnlinePath(String picOnlinePath) {
+		this.picOnlinePath = picOnlinePath;
+	}
+
+	/**
+	 * 目标类型
+	 */
 	private String desType;
 
 	public String getDesType() {
