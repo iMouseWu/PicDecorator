@@ -20,7 +20,7 @@ public class TypeDectator extends Decorator {
 
 	@Override
 	public void operation(DecoratorContext context) {
-		decorator.operation(context);
+		component.operation(context);
 		String desPath = context.getRootPath() + File.separator + context.getPicName() + "." + context.getDesType();
 		try {
 			Im4javaImageUtil.changeImgeFormat(context.getFilePaths(), desPath);

@@ -22,7 +22,7 @@ public class LHDecorator extends Decorator {
 
 	@Override
 	public void operation(DecoratorContext context) {
-		decorator.operation(context);
+		component.operation(context);
 
 		String path = context.getFilePaths();
 		upper = context.getWidthUpper();
@@ -31,7 +31,7 @@ public class LHDecorator extends Decorator {
 			ImageInfoBO image = new ImageInfoBO(path);
 			int width = image.getWidth();
 			int height = image.getHeigth();
-			if (!(isNumInRange(width) && isNumInRange(height))) {
+			if (isNumInRange(width) && isNumInRange(height)) {
 				return;
 			}
 			int background = 0;
@@ -47,7 +47,7 @@ public class LHDecorator extends Decorator {
 				background = height;
 			}
 			Im4javaImageUtil.scaleImage(width, height, path, path);
-			if (!(isNumInRange(width) && isNumInRange(height))) {
+			if (isNumInRange(width) && isNumInRange(height)) {
 				return;
 			}
 			ImageUtils.createImgWithBacg(path, path, background);

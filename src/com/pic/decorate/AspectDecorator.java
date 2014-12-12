@@ -18,7 +18,7 @@ public class AspectDecorator extends Decorator {
 
 	@Override
 	public void operation(DecoratorContext context) {
-		decorator.operation(context);
+		component.operation(context);
 		String path = context.getFilePaths();
 		try {
 			ImageInfoBO imageInfo = new ImageInfoBO(path);

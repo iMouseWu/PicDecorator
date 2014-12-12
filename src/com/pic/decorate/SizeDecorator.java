@@ -21,7 +21,7 @@ public class SizeDecorator extends Decorator {
 
 	@Override
 	public void operation(DecoratorContext context) {
-		decorator.operation(context);
+		component.operation(context);
 		standSize = context.getSize();
 		String path = context.getFilePaths();
 		File file = new File(path);
